@@ -51,8 +51,10 @@ const GHOST_MEMBERSHIP_QUERY = `SELECT
 FROM members_stripe_customers as msc
 INNER JOIN members_stripe_customers_subscriptions as mscs
 INNER JOIN members as m
-ON msc.customer_id = mscs.customer_id AND m.id = msc.member_id;
+ON msc.customer_id = mscs.customer_id AND m.id = msc.member_id
 `
+
+const CASTOPOD_SUBSCRIPTION_QUERY = "SELECT id, podcast_id, email, token, status, created_by, updated_by, created_at, updated_at FROM cp_subscriptions"
 
 // GhostMembership is a struct built upon [GHOST_MEMBERSHIP_QUERY].
 // Currently, none of its fields can be nullable.
