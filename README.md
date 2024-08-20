@@ -14,9 +14,22 @@ TBD.
 
 See [`examples/simple/README.md`](./examples/simple/README.md).
 
-## Warnings
+## Warnings and limitations
 
-**Please verify the output of this application before using it**.
+First and foremost, you must manage the Redis cache separately from this application. Castopod stores data in Redis (if available) and updates to the database will not be reflected. One easy way to manage this is to purge the Redis cache whenever this application runs:
+
+```bash
+export REDIS_PASSWORD=your_password_goes_here
+redis-cli FLUSHALL
+```
+
+If you're running it in a container, do the following *immediately* after using this library:
+
+```bash
+podman exec -it castopod-redis redis-cli -a your_password_goes_here FLUSHALL
+```
+
+Additionally, **Please verify the output of this application before using it**. Stability is never guaranteed. Make backups.
 
 ## Structure
 

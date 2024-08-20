@@ -47,7 +47,7 @@ type Config struct {
 const GHOST_MEMBERSHIP_QUERY = `SELECT
   m.email as email,
   mscs.status,
-  mscs.id as plan_id
+  mscs.plan_id as plan_id
 FROM members_stripe_customers as msc
 INNER JOIN members_stripe_customers_subscriptions as mscs
 INNER JOIN members as m
