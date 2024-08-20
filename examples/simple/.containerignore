@@ -1,0 +1,8 @@
+.containerignore
+.gitignore
+config*.json
+containerfile
+ghost-to-castopod
+README.md
+simple
+*.txt

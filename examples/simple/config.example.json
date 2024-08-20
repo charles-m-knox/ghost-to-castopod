@@ -1,0 +1,14 @@
+{
+    "castopodConfig": {
+        "sqlConnectionString": "castopod-db-username:password@tcp(127.0.0.1:3307)/castopod-db-name",
+        "createdBy": 1,
+        "updatedBy": 1
+    },
+    "plans": {
+        "price_Z1K324f2dSyHeaXD5G2G1x29": [1]
+    },
+    "sqlConnectionString": "ghost-db-username:password@tcp(127.0.0.1:3306)/ghost-db-name",
+    "blessedAccounts": {
+        "admin@example.com": [1]
+    }
+}

@@ -1,0 +1,19 @@
+FROM docker.io/library/golang:alpine AS builder
+
+RUN apk add upx
+
+WORKDIR /site
+COPY go.mod /site
+
+RUN go mod download
+
+COPY . /site
+
+WORKDIR /site
+RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -v -o app-uncompressed -ldflags="-w -s -buildid=" -trimpath
+RUN upx --best -o ./app app-uncompressed
+
+FROM docker.io/library/alpine:latest
+COPY --from=builder /site/app /app
+
+ENTRYPOINT ["/app"]
