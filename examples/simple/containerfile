@@ -1,10 +1,16 @@
-FROM docker.io/library/golang:alpine AS builder
+# as of creating this, go 1.23.x support is not available yet, so we are
+# using archlinux as the base:
+# FROM docker.io/library/golang:alpine AS builder
+FROM quay.io/archlinux/archlinux:latest AS builder
+ARG GOPROXY
+ARG GOSUMDB
 
-RUN apk add upx
+RUN pacman -Syu --noconfirm upx git go
+# switch to this when golang:alpine support is available for go 1.23.x:
+# RUN apk add upx git
 
 WORKDIR /site
 COPY go.mod /site
-
 RUN go mod download
 
 COPY . /site

@@ -74,8 +74,11 @@ Note: If you're using an SSH port forwarding mechanism for the mysql database co
 
 ### Building the container image
 
+If you're building from an Arch Linux host, you can use your host system's pacman mirrorlist for faster builds. If not, remove the `-v` flag from the `podman build` command below. It is recommended to run `export GOSUMDB=off`.
+
 ```bash
 podman build \
+    -v "/etc/pacman.d/mirrorlist:/etc/pacman.d/mirrorlist:ro" \
     --build-arg GOSUMDB="${GOSUMDB}" \
     --build-arg GOPROXY="${GOPROXY}" \
     -f containerfile \
