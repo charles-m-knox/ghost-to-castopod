@@ -22,8 +22,6 @@ type CastopodConfig struct {
 	// The castopod database user ID to use for the UpdatedBy field. Probably
 	// should be 1 - the admin account.
 	UpdatedBy uint `json:"updatedBy"`
-	// A subscription will be created for every podcast in this list.
-	// PodcastIDs []int
 	// Connection string for the Castopod mysql database.
 	SQLConnectionString string `json:"sqlConnectionString"`
 }
