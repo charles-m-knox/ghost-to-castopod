@@ -24,10 +24,12 @@ type CastopodConfig struct {
 	UpdatedBy uint `json:"updatedBy"`
 	// A subscription will be created for every podcast in this list.
 	// PodcastIDs []int
+	// Connection string for the Castopod mysql database.
+	SQLConnectionString string `json:"sqlConnectionString"`
 }
 
 type Config struct {
-	// Connection string for the mysql database.
+	// Connection string for the Ghost mysql database.
 	SQLConnectionString string `json:"sqlConnectionString"`
 
 	// Represents a mapping of plan IDs to Castopod podcast IDs. For example,
