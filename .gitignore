@@ -1,0 +1,4 @@
+ghost-to-castopod
+config.json
+config.*.json
+*.out
