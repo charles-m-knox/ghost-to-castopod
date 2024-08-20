@@ -4,11 +4,7 @@ Takes Ghost blog subscriptions and pushes them to a Castopod server.
 
 This leverages a database connection - Ghost recommends mysql as its supported database type, but it can technically work with any compliant driver that implements Go's `database/sql` interfaces.
 
-This is compatible with **Ghost v5.87.1**. Compatibility with any other version is not guaranteed.
-
-## Requirements
-
-TBD.
+This is compatible with **Ghost v5.87.1** and **Castopod v1.12.3**. Compatibility with any other version is not guaranteed.
 
 ## Example Usage
 
@@ -46,5 +42,9 @@ The `ghosttocastopod` package is the primary library for this module. Its unit t
 Here is a list of all tested Ghost versions that are known to work:
 
 - v5.87.1
+
+Here is a list of all tested Castopod versions that are known to work:
+
+- v1.12.3
 
 If any database migrations that modify the tables used by this library occur upstream, this application will likely break.
