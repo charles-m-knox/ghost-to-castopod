@@ -228,10 +228,11 @@ func (c *Config) GetCastopodSubscriptions(gms []GhostMembership, cms []CastopodS
 
 			s, ok := emails[gm.Email][p]
 			if !ok {
+				_, t := castopod.NewToken()
 				s = CastopodSubscription{
 					PodcastID: p,
 					Email:     gm.Email,
-					Token:     castopod.NewToken(),
+					Token:     t,
 					CreatedBy: c.CastopodConfig.CreatedBy,
 					CreatedAt: time.Now(),
 					Changed:   true,
@@ -278,10 +279,11 @@ func (c *Config) GetCastopodSubscriptions(gms []GhostMembership, cms []CastopodS
 
 			s, ok := emails[email][p]
 			if !ok {
+				_, t := castopod.NewToken()
 				s = CastopodSubscription{
 					PodcastID: p,
 					Email:     email,
-					Token:     castopod.NewToken(),
+					Token:     t,
 					CreatedBy: c.CastopodConfig.CreatedBy,
 					CreatedAt: time.Now(),
 					Changed:   true,

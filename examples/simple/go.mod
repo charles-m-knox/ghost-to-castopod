@@ -9,5 +9,5 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
-	git.cmcode.dev/cmcode/go-castopod v0.0.1 // indirect
+	git.cmcode.dev/cmcode/go-castopod v0.0.3 // indirect
 )
