@@ -6,10 +6,9 @@ import (
 	"fmt"
 	"os"
 	"slices"
-	"strings"
 	"time"
 
-	uuid "git.cmcode.dev/cmcode/uuid"
+	castopod "git.cmcode.dev/cmcode/go-castopod/pkg/lib"
 )
 
 // Determines the behavior of how values are added/changed in the Castopod
@@ -76,6 +75,10 @@ type CastopodSubscription struct {
 	UpdatedBy uint      // defined in the user-provided config
 	CreatedAt time.Time // non-null
 	UpdatedAt time.Time // non-null
+
+	// This will get set to true if we changed it from its original database
+	// state. It is not a part of the database.
+	Changed bool
 }
 
 func (c *Config) ProcessGhostMembership(m GhostMembership) (GhostMembership, error) {
@@ -199,12 +202,6 @@ func (c *Config) GetCastopodSubscriptions(gms []GhostMembership, cms []CastopodS
 			continue
 		}
 
-		// pre-emptively suspend every single podcast membership, because
-		// later we will be able to enable only the ones that are active
-		s.Status = CastopodStatusSuspended
-		s.UpdatedAt = time.Now()
-		s.UpdatedBy = c.CastopodConfig.UpdatedBy
-
 		_, ok := emails[s.Email]
 		if !ok {
 			emails[s.Email] = make(map[uint]CastopodSubscription)
@@ -234,20 +231,30 @@ func (c *Config) GetCastopodSubscriptions(gms []GhostMembership, cms []CastopodS
 				s = CastopodSubscription{
 					PodcastID: p,
 					Email:     gm.Email,
-					Token:     NewUUID(),
+					Token:     castopod.NewToken(),
 					CreatedBy: c.CastopodConfig.CreatedBy,
 					CreatedAt: time.Now(),
+					Changed:   true,
 				}
 			}
 
+			newStatus := ""
 			if gm.Status == GhostStatusActive {
-				s.Status = CastopodStatusActive
+				newStatus = CastopodStatusActive
 			} else {
-				s.Status = CastopodStatusSuspended
+				newStatus = CastopodStatusSuspended
 			}
 
-			s.UpdatedAt = time.Now()
-			s.UpdatedBy = c.CastopodConfig.UpdatedBy
+			// only make a change if we need to, otherwise the database
+			// will auto-increment out of control on each update
+			if newStatus != s.Status {
+				s.Status = newStatus
+				s.UpdatedAt = time.Now()
+				s.UpdatedBy = c.CastopodConfig.UpdatedBy
+				s.Changed = true
+			} else {
+				s.Changed = false
+			}
 
 			emails[gm.Email][p] = s
 		}
@@ -274,15 +281,21 @@ func (c *Config) GetCastopodSubscriptions(gms []GhostMembership, cms []CastopodS
 				s = CastopodSubscription{
 					PodcastID: p,
 					Email:     email,
-					Token:     NewUUID(),
+					Token:     castopod.NewToken(),
 					CreatedBy: c.CastopodConfig.CreatedBy,
 					CreatedAt: time.Now(),
+					Changed:   true,
 				}
 			}
 
-			s.Status = CastopodStatusActive
-			s.UpdatedAt = time.Now()
-			s.UpdatedBy = c.CastopodConfig.UpdatedBy
+			// only make a change if we need to, otherwise the database
+			// will auto-increment out of control on each update
+			if s.Status != CastopodStatusActive {
+				s.Changed = true
+				s.Status = CastopodStatusActive
+				s.UpdatedAt = time.Now()
+				s.UpdatedBy = c.CastopodConfig.UpdatedBy
+			}
 
 			emails[email][p] = s
 		}
@@ -298,11 +311,4 @@ func (c *Config) GetCastopodSubscriptions(gms []GhostMembership, cms []CastopodS
 	}
 
 	return cs
-}
-
-// NewUUID returns a double uuid with the hyphens removed, leading to a
-// 64-character string. Castopod appears to use something like this for its
-// token.
-func NewUUID() string {
-	return strings.ReplaceAll(fmt.Sprintf("%v%v", uuid.New(), uuid.New()), "-", "")
 }

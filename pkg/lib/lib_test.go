@@ -151,41 +151,41 @@ func TestGetCastopodSubscriptions(t *testing.T) {
 	// value. The test needs to test the preservation of existing tokens as well
 	// as the generation of new ones.
 	tw := []ghosttocastopod.CastopodSubscription{
-		{Email: email1, Token: token1, PodcastID: 1, Status: cActive},
-		{Email: email1, Token: token2, PodcastID: 2, Status: cActive},
-		{Email: email1, Token: token3, PodcastID: 3, Status: cActive},
-		{Email: email1, Token: "", PodcastID: 4, Status: cActive},
-		{Email: email1, Token: "", PodcastID: 5, Status: cActive},
-		{Email: email1, Token: "", PodcastID: 6, Status: cActive},
+		{Email: email1, Token: token1, PodcastID: 1, Status: cActive, Changed: false},
+		{Email: email1, Token: token2, PodcastID: 2, Status: cActive, Changed: false},
+		{Email: email1, Token: token3, PodcastID: 3, Status: cActive, Changed: true},
+		{Email: email1, Token: "", PodcastID: 4, Status: cActive, Changed: true},
+		{Email: email1, Token: "", PodcastID: 5, Status: cActive, Changed: true},
+		{Email: email1, Token: "", PodcastID: 6, Status: cActive, Changed: true},
 
 		// second user
-		{Email: email2, Token: "", PodcastID: 5, Status: cActive},
-		{Email: email2, Token: "", PodcastID: 6, Status: cActive},
+		{Email: email2, Token: "", PodcastID: 5, Status: cActive, Changed: true},
+		{Email: email2, Token: "", PodcastID: 6, Status: cActive, Changed: true},
 
 		// third user
-		{Email: email3, Token: "", PodcastID: 1, Status: cSusp},
-		{Email: email3, Token: "", PodcastID: 2, Status: cSusp},
-		{Email: email3, Token: "", PodcastID: 3, Status: cSusp},
-		{Email: email3, Token: "", PodcastID: 4, Status: cSusp},
-		{Email: email3, Token: "", PodcastID: 5, Status: cActive},
-		{Email: email3, Token: "", PodcastID: 6, Status: cActive},
-		{Email: email3, Token: "", PodcastID: 7, Status: cSusp},
+		{Email: email3, Token: "", PodcastID: 1, Status: cSusp, Changed: true},
+		{Email: email3, Token: "", PodcastID: 2, Status: cSusp, Changed: true},
+		{Email: email3, Token: "", PodcastID: 3, Status: cSusp, Changed: true},
+		{Email: email3, Token: "", PodcastID: 4, Status: cSusp, Changed: true},
+		{Email: email3, Token: "", PodcastID: 5, Status: cActive, Changed: true},
+		{Email: email3, Token: "", PodcastID: 6, Status: cActive, Changed: true},
+		{Email: email3, Token: "", PodcastID: 7, Status: cSusp, Changed: true},
 
 		// blessed accounts
-		{Email: admin1, Token: "", PodcastID: 1, Status: cActive},
-		{Email: admin1, Token: "", PodcastID: 2, Status: cActive},
-		{Email: admin1, Token: "", PodcastID: 3, Status: cActive},
-		{Email: admin1, Token: "", PodcastID: 4, Status: cActive},
-		{Email: admin1, Token: "", PodcastID: 5, Status: cActive},
-		{Email: admin1, Token: "", PodcastID: 6, Status: cActive},
-		// {Email: admin1, Token: "", PodcastID: 7, Status: cActive}, // admin1 hasn't been blessed with access to podcast 7!
-		{Email: admin2, Token: "", PodcastID: 1, Status: cActive},
-		{Email: admin2, Token: "", PodcastID: 2, Status: cActive},
-		{Email: admin2, Token: "", PodcastID: 3, Status: cActive},
-		{Email: admin2, Token: "", PodcastID: 4, Status: cActive},
-		{Email: admin2, Token: "", PodcastID: 5, Status: cActive},
-		// {Email: admin2, Token: "", PodcastID: 6, Status: cActive}, // admin2 hasn't been blessed with access to podcast 6!
-		// {Email: admin2, Token: "", PodcastID: 7, Status: cActive}, // admin2 hasn't been blessed with access to podcast 7!
+		{Email: admin1, Token: "", PodcastID: 1, Status: cActive, Changed: true},
+		{Email: admin1, Token: "", PodcastID: 2, Status: cActive, Changed: true},
+		{Email: admin1, Token: "", PodcastID: 3, Status: cActive, Changed: true},
+		{Email: admin1, Token: "", PodcastID: 4, Status: cActive, Changed: true},
+		{Email: admin1, Token: "", PodcastID: 5, Status: cActive, Changed: true},
+		{Email: admin1, Token: "", PodcastID: 6, Status: cActive, Changed: true},
+		// {Email: admin1, Token: "", PodcastID: 7, Status: cActive, Changed: true}, // admin1 hasn't been blessed with access to podcast 7!
+		{Email: admin2, Token: "", PodcastID: 1, Status: cActive, Changed: true},
+		{Email: admin2, Token: "", PodcastID: 2, Status: cActive, Changed: true},
+		{Email: admin2, Token: "", PodcastID: 3, Status: cActive, Changed: true},
+		{Email: admin2, Token: "", PodcastID: 4, Status: cActive, Changed: true},
+		{Email: admin2, Token: "", PodcastID: 5, Status: cActive, Changed: true},
+		// {Email: admin2, Token: "", PodcastID: 6, Status: cActive, Changed: true}, // admin2 hasn't been blessed with access to podcast 6!
+		// {Email: admin2, Token: "", PodcastID: 7, Status: cActive, Changed: true}, // admin2 hasn't been blessed with access to podcast 7!
 	}
 
 	tests := []struct {
@@ -223,6 +223,12 @@ func TestGetCastopodSubscriptions(t *testing.T) {
 
 				failed := false
 
+				if g.Changed != w.Changed {
+					t.Logf("test %v failed: Changed mismatch, got %v, want %v (j=%v, k=%v)", i, g.Changed, w.Changed, j, k)
+					t.Fail()
+					failed = true
+				}
+
 				if g.Status != w.Status {
 					t.Logf("test %v failed: Status mismatch, got %v, want %v (j=%v, k=%v)", i, g.Status, w.Status, j, k)
 					t.Fail()
@@ -241,7 +247,8 @@ func TestGetCastopodSubscriptions(t *testing.T) {
 					failed = true
 				}
 
-				if g.UpdatedBy != test.c.CastopodConfig.UpdatedBy {
+				// only enforce UpdatedBy if the membership was changed
+				if g.UpdatedBy != test.c.CastopodConfig.UpdatedBy && g.Changed {
 					t.Logf("test %v failed: UpdatedBy mismatch, got %v, want %v (j=%v, k=%v)", i, g.UpdatedBy, test.c.CastopodConfig.UpdatedBy, j, k)
 					t.Fail()
 					failed = true
