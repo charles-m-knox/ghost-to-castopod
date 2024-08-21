@@ -129,13 +129,26 @@ func main() {
 	q.WriteString("INSERT INTO cp_subscriptions (podcast_id, email, token, status, created_by, updated_by, created_at, updated_at) VALUES \n")
 
 	lr := len(results) - 1
+
+	changed := false
+
 	for i, r := range results {
+		if !r.Changed {
+			continue
+		}
+		changed = true
+
 		finalComma := ","
 		if i == lr {
 			finalComma = ""
 		}
 
 		q.WriteString(fmt.Sprintf("(%v, '%v', '%v', '%v', %v, %v, '%v', '%v')%v \n", r.PodcastID, r.Email, r.Token, r.Status, r.CreatedBy, r.UpdatedBy, r.CreatedAt.Format("2006-01-02 15:04:05"), r.UpdatedAt.Format("2006-01-02 15:04:05"), finalComma))
+	}
+
+	if !changed {
+		log.Println("done processing; no changes are needed since the last run. exiting.")
+		return
 	}
 
 	q.WriteString("ON DUPLICATE KEY UPDATE podcast_id = VALUES(podcast_id), email = VALUES(email), token = VALUES(token), status = VALUES(status), created_by = VALUES(created_by), updated_by = VALUES(updated_by), created_at = VALUES(created_at), updated_at = VALUES(updated_at);")
