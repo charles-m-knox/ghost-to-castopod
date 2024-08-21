@@ -3,7 +3,7 @@ module git.cmcode.dev/cmcode/ghost-to-castopod/examples/simple
 go 1.23.0
 
 require (
-	git.cmcode.dev/cmcode/ghost-to-castopod v0.0.2
+	git.cmcode.dev/cmcode/ghost-to-castopod v0.0.3
 	github.com/go-sql-driver/mysql v1.8.1
 )
 
