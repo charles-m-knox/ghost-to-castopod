@@ -69,7 +69,7 @@ type CastopodSubscription struct {
 	ID        uint      // auto-increment
 	PodcastID uint      // note: composite key is formed with id+podcast_id
 	Email     string    // 255 chars max
-	Token     string    // note: unique key; 64 characters, 2 uuids without dashes
+	Token     string    // sha256 hash of 8 random alphanumeric characters
 	Status    string    // can only be active or suspended
 	CreatedBy uint      // defined in the user-provided config
 	UpdatedBy uint      // defined in the user-provided config
