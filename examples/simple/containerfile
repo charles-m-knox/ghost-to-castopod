@@ -22,4 +22,6 @@ RUN upx --best -o ./app app-uncompressed
 FROM docker.io/library/alpine:latest
 COPY --from=builder /site/app /app
 
+LABEL org.opencontainers.image.source https://github.com/charles-m-knox/ghost-to-castopod
+
 ENTRYPOINT ["/app"]
