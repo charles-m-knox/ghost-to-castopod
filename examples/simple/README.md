@@ -7,7 +7,7 @@ This example connects to both a Ghost mysql and Castopod mariadb database, and p
 Start by cloning the repository:
 
 ```bash
-git clone https://git.cmcode.dev/cmcode/ghost-to-castopod.git
+git clone https://github.com/charles-m-knox/ghost-to-castopod.git
 cd examples/simple
 cp config.example.json config.json
 ```
@@ -67,7 +67,7 @@ You must first create a `config.json` just like above, and ensure that the outpu
 ```bash
 podman run --rm -it \
     -v "$(pwd)/config.json:/config.json:ro" \
-    git.cmcode.dev/cmcode/ghost-to-castopod:simple-mysql
+    ghcr.io/charles-m-knox/ghost-to-castopod:simple-mysql
 ```
 
 Note: If you're using an SSH port forwarding mechanism for the mysql database connection, you may want to consider adding `--network host` to the above `podman run` command.
@@ -82,5 +82,5 @@ podman build \
     --build-arg GOSUMDB="${GOSUMDB}" \
     --build-arg GOPROXY="${GOPROXY}" \
     -f containerfile \
-    -t git.cmcode.dev/cmcode/ghost-to-castopod:simple-mysql .
+    -t github.com/charles-m-knox/ghost-to-castopod:simple-mysql .
 ```

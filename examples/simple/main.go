@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	g2c "git.cmcode.dev/cmcode/ghost-to-castopod/pkg/lib"
+	g2c "github.com/charles-m-knox/ghost-to-castopod/pkg/lib"
 	_ "github.com/go-sql-driver/mysql"
 )
 

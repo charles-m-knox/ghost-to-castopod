@@ -1,8 +1,8 @@
 filippo.io/edwards25519 v1.1.0 h1:FNf4tywRC1HmFuKW5xopWpigGjJKiJSV0Cqo0cJWDaA=
 filippo.io/edwards25519 v1.1.0/go.mod h1:BxyFTGdWcka3PhytdK4V28tE5sGfRvvvRV7EaN4VDT4=
-git.cmcode.dev/cmcode/ghost-to-castopod v0.0.4 h1:92WYSOpSH4VZzaZFY1chfUNFeJ04AW1gODTEVv8tNY4=
-git.cmcode.dev/cmcode/ghost-to-castopod v0.0.4/go.mod h1:vG/MLuNwNDQRUAAhCsVZNDQT41HqWiI0d3tRar/9zQk=
-git.cmcode.dev/cmcode/go-castopod v0.0.4 h1:KGCtvDNcPMVYmTlUXtaC1stsgYRB4kqjZoEtc4xot0U=
-git.cmcode.dev/cmcode/go-castopod v0.0.4/go.mod h1:P2iXkm5tAmjtLEKQLoj751xtsKMSupe8gRE9nXf5EpE=
+github.com/charles-m-knox/ghost-to-castopod v0.0.5 h1:jqbZQc+roSR0zFpwhtWGZEmSiIJGqKrj4mawERlIhec=
+github.com/charles-m-knox/ghost-to-castopod v0.0.5/go.mod h1:iLMQvHzonCemAB6Cg5afwovhBMoWdG9yzGpgmm0lKA0=
+github.com/charles-m-knox/go-castopod v0.0.5 h1:WH5Su8RE/rTv4hhN/+GH6AUz71Etou9LOvAfYMjqH0k=
+github.com/charles-m-knox/go-castopod v0.0.5/go.mod h1:9JIwG96gUNvXynKCRa8ysN9VQkWauM9fxnJmC++2qk4=
 github.com/go-sql-driver/mysql v1.8.1 h1:LedoTUt/eveggdHS9qUFC1EFSa8bU2+1pZjSRpvNJ1Y=
 github.com/go-sql-driver/mysql v1.8.1/go.mod h1:wEBSXgmK//2ZFJyE+qWnIsVGmvmEKlqwuVSjsCm7DZg=
