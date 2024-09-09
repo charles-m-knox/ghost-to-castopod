@@ -8,7 +8,7 @@ import (
 	"slices"
 	"time"
 
-	castopod "git.cmcode.dev/cmcode/go-castopod/pkg/lib"
+	castopod "github.com/charles-m-knox/go-castopod/pkg/lib"
 )
 
 // Determines the behavior of how values are added/changed in the Castopod

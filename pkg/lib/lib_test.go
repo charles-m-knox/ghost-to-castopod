@@ -3,7 +3,7 @@ package ghosttocastopod_test
 import (
 	"testing"
 
-	ghosttocastopod "git.cmcode.dev/cmcode/ghost-to-castopod/pkg/lib"
+	ghosttocastopod "github.com/charles-m-knox/ghost-to-castopod/pkg/lib"
 )
 
 const (
