@@ -82,5 +82,5 @@ podman build \
     --build-arg GOSUMDB="${GOSUMDB}" \
     --build-arg GOPROXY="${GOPROXY}" \
     -f containerfile \
-    -t github.com/charles-m-knox/ghost-to-castopod:simple-mysql .
+    -t ghcr.io/charles-m-knox/ghost-to-castopod:simple-mysql .
 ```
